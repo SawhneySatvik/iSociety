@@ -80,9 +80,68 @@ class Resident
     }
 
 };
+
+class Admin:Resident
+{
+    public:
+    int admin_password;
+
+    void adminLogin()
+    {
+        cout<<"================================================================ Admin LogIn =============================================================="<<endl;
+        password:
+        cout<<" Enter Password: ";
+        cin>>admin_password;
+        if(admin_password !=0000)
+        {
+            cout<<"Wrong password.";
+            goto password;
+        }
+        else
+        {
+            int n;
+            cout<<""<<endl;
+            cout<<"1. Display Resident List"<<endl;
+            cout<<"2. Update residents "<<endl;
+            cout<<"3. Add bills for the residents "<<endl;
+            cout<<"4. Exit"<<endl;
+            cout<<"Enter your choice: ";
+            cin>>n;
+            switch(n)
+            {
+                case 1: dispResidents();
+                        break;
+                case 2: updateResidents();
+                        break;
+                case 3: addBills();
+                        break;
+                case 4: cout<<"Thank you!";
+            }   
+        }
+    }
+
+    void dispResidents()
+    {
+
+    }
+
+    void updateResidents()
+    {
+
+    }
+
+    void addBills()
+    {
+
+    }
+
+};
+
 class Society
 {
     public:
+    string type;
+    int pincode, price_range;
         void welcome()
         {
             cout<<"============================================================================================================================================================================="<<endl;
@@ -99,71 +158,29 @@ class Society
             cout<<"============================================================================================================================================================================="<<endl;
         }
 
-        void adminLogin()
+        void searchQuery()
         {
-            cout<<"================================================================ Admin LogIn =============================================================="<<endl;
-            password:
-            cout<<" Enter Password: ";
-            cin>>admin_password;
-            if(admin_password !=0000)
-            {
-                cout<<"Wrong password.";
-                goto password;
-            }
-            else
-            {
-                int n;
-                cout<<""<<endl;
-                cout<<"1. Display Resident List"<<endl;
-                cout<<"2. Update residents "<<endl;
-                cout<<"3. Add bills for the residents "<<endl;
-                cout<<"4. Exit"<<endl;
-                cout<<"Enter your choice: ";
-                cin>>n;
-                switch(n)
-                {
-                    case 1: dispResidents();
-                            break;
-                    case 2: UpdateResidents();
-                            break;
-                    case 3: addBills();
-                            break;
-                    case 4: cout<<"Thank you!";
-                }   
-            }
-
-            
+            cout<<"Let's get started on finding you an apartment. Depending on your preferences we will search high and low and find the perfect home for you!"<<endl;
+            cout<<"Type:";
+            getline(cin, type);
+            cout<<"Pincode of the area: ";
+            cin>>pincode;
+            cout<<"Price range (Upper Limit): ";
+            cin>>price_range;
         }
 
 
 
+        void search()
+        {
+            //search algo to mach apartment(from db)
+            //can return a vector of potential apartments
+        }
 
-
-
-
-        // void searchQuery()
-        // {
-        //     cout<<"Let's get started on finding you an apartment. Depending on your preferences we will search high and low and find the perfect home for you!"<<endl;
-        //     cout<<"Type:";
-        //     getline(cin, type);
-        //     cout<<"Pincode of the area: ";
-        //     cin>>user_pin;
-        //     cout<<"Price range (Upper Limit): ";
-        //     cin>>price_range;
-        // }
-
-
-
-        // void search()
-        // {
-        //     //search algo to mach apartment(from db)
-        //     //can return a vector of potential apartments
-        // }
-
-        // void results()
-        // {
-        //     //to display the search results
-        // }
+        void results()
+        {
+            //to display the search results
+        }
 };
 
 int main()
@@ -171,6 +188,7 @@ int main()
     int choice;
     Society s1;
     Resident r1;
+    Admin a1;
     s1.welcome(); 
     cout<<"";
     cout<<"================================================================= MAIN MENU ==============================================================="<<endl;
@@ -186,7 +204,7 @@ int main()
                 break;
         case 2: r1.acceptUserInfo(0);
                 break;
-        case 3: s1.adminLogin();
+        case 3: a1.adminLogin();
                 break;
         case 4: exit(0);
                 break;
