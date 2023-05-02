@@ -1,8 +1,10 @@
 #include<bits/stdc++.h>
+#include<stdlib.h>
 #include<iostream>
-#include<iomanip>
-#include<fstream>
-#include<cctype>
+#include "mysql_connection.h"
+#include<cppconn/driver.h>
+#include<cppconn/exception.h>
+#include<cppconn/prepared_statement.h>
 using namespace std;
 
 class Resident
@@ -10,13 +12,13 @@ class Resident
     public:
     long int aadharno, phno;
     string email, name;
-    int flat_number;
     string user_password;
+    int price;
 
     void residentLogin()
     {
         int choice;
-        cout<<"============================================================== Resident LogIn ============================================================="<<endl;
+        cout<<"============================================================== RESIDENT LOGIN============================================================="<<endl;
         cout<<"1. Show Personal Details "<<endl;
         cout<<"2. Edit Personal Details "<<endl;
         cout<<"3. Bills "<<endl;
@@ -31,10 +33,10 @@ class Resident
                     break;
         }
     }
+
     void bills()
     {
-        //display bills thru info frm admin
-
+        //display bill from data base
     }
 
     void acceptUserInfo(int n)
@@ -85,10 +87,11 @@ class Admin:Resident
 {
     public:
     int admin_password;
+    
 
     void adminLogin()
     {
-        cout<<"================================================================ Admin LogIn =============================================================="<<endl;
+        cout<<"================================================================ ADMIN LOGIN =============================================================="<<endl;
         password:
         cout<<" Enter Password: ";
         cin>>admin_password;
@@ -104,7 +107,8 @@ class Admin:Resident
             cout<<"1. Display Resident List"<<endl;
             cout<<"2. Update residents "<<endl;
             cout<<"3. Add bills for the residents "<<endl;
-            cout<<"4. Exit"<<endl;
+            cout<<"4. Add Apartments "<<endl;
+            cout<<"5. Exit"<<endl;
             cout<<"Enter your choice: ";
             cin>>n;
             switch(n)
@@ -115,24 +119,76 @@ class Admin:Resident
                         break;
                 case 3: addBills();
                         break;
-                case 4: cout<<"Thank you!";
+                case 4: addApartments();
+                        break;
+                case 5: cout<<"Thank you!";
             }   
         }
     }
 
     void dispResidents()
     {
-
+        cout<<"================================================================ Residents ==============================================================";
+        //display from db
     }
 
     void updateResidents()
     {
+       string name;
+       cout<<"================================================================ Update Residents =============================================================="<<endl;
+       cout<<"Enter name of resident to be removed."<<endl;
+       getline(cin, name);
+       //remove person from database
 
     }
 
     void addBills()
     {
+        string name;
+        cout<<"Enter name of the resident."<<endl;
+        getline(cin, name);
+        cout<<"Enter the amount to be payed for the month."<<endl;
+        cin>>price;
+        //enter price in db
+    }
 
+    void addApartments()
+    {
+        int choice,apartment_type, apartment_price, apartment_pincode;
+        string apartment_name,apartment_address;
+        float apartment_price;
+
+        cout<<"================================================================ Manage Apartments =============================================================="<<endl;
+        cout<<"1. Add apartment "<<endl;
+        cout<<"2. Delete apartment "<<endl;
+        cout<<"3. Edit apartment "<<endl;
+        cout<<"4. Back"<<endl;
+
+        cout<<"Enter your choice: ";
+        cin>>choice;
+
+        cout<<"================================================"<<endl;
+        cout<<"Add Apartment"<<endl;
+        cout<<"================================================"<<endl;
+        cout<<"Enter Apartment Name: ";
+        getline(cin, apartment_name);
+
+        cout<<"Enter Apartment Address: ";
+        getline(cin, apartment_address);
+
+        cout<<"Enter Pincode: ";
+        cin>>apartment_pincode;
+
+        cout<<"Enter Apartment Type (BHK): ";
+        cin>>apartment_type;
+
+        cout<<"Enter Apartment Price: ";
+        cin>>apartment_price;
+
+        cout<<"================================================"<<endl;
+        //add to apartments db
+        cout<<"Room Added Successfully"<<endl;
+        cout<<"================================================"<<endl;
     }
 
 };
@@ -174,12 +230,6 @@ class Society
         void search()
         {
             //search algo to mach apartment(from db)
-            //can return a vector of potential apartments
-        }
-
-        void results()
-        {
-            //to display the search results
         }
 };
 
