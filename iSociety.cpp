@@ -1,10 +1,11 @@
 #include<bits/stdc++.h>
 #include<stdlib.h>
 #include<iostream>
-#include "mysql_connection.h"
-#include<cppconn/driver.h>
-#include<cppconn/exception.h>
-#include<cppconn/prepared_statement.h>
+#include<iostream>
+#include<iomanip>
+#include<fstream>
+#include<cctype>
+
 using namespace std;
 
 class Resident
@@ -14,6 +15,7 @@ class Resident
     string email, name;
     string user_password;
     int price;
+    vector <int> bill;
 
     void residentLogin()
     {
@@ -36,6 +38,8 @@ class Resident
 
     void bills()
     {
+        cout<<"============================================================== BILLS ============================================================="<<endl;
+        
         //display bill from data base
     }
 
@@ -79,6 +83,16 @@ class Resident
         cout<<"Phone Number: "<<phno<<endl;
         cout<<"E-Mail: "<<email<<endl;
         cout<<"Aadhar Number: "<<aadharno<<endl; 
+    }
+
+    void writeUser()
+    {
+        Resident res;
+        ofstream outfile;
+        outfile.open("society.dat",ios::binary|ios::app);
+        res.acceptUserInfo(0);
+        outfile.write(reinterpret_cast<char *> (&res), sizeof(Resident));
+        outfile.close();
     }
 
 };
@@ -129,7 +143,21 @@ class Admin:Resident
     void dispResidents()
     {
         cout<<"================================================================ Residents ==============================================================";
-        //display from db
+        Resident r;
+        ifstream infile;
+        infile.open("1society.dat",ios::binary);
+        if(!infile)
+        {
+            cout<<"File cannot be found";
+        } 
+        else
+        {
+            cout<<"RESIDENTS LIST"<<endl;
+            while(infile.read(reinterpret_cast<char *> (&r), sizeof(Resident)))
+            {
+                r.displayInfo();
+            }
+        } 
     }
 
     void updateResidents()
@@ -156,7 +184,6 @@ class Admin:Resident
     {
         int choice,apartment_type, apartment_price, apartment_pincode;
         string apartment_name,apartment_address;
-        float apartment_price;
 
         cout<<"================================================================ Manage Apartments =============================================================="<<endl;
         cout<<"1. Add apartment "<<endl;
@@ -235,29 +262,34 @@ class Society
 
 int main()
 {
-    int choice;
+    int choice, enter;
     Society s1;
     Resident r1;
     Admin a1;
     s1.welcome(); 
     cout<<"";
-    cout<<"================================================================= MAIN MENU ==============================================================="<<endl;
-    cout<<"1. Resident Login "<<endl;
-    cout<<"2. New User SignUp "<<endl;
-    cout<<"3. Admin Login "<<endl;
-    cout<<"4. Exit "<<endl;
-    cout<<"Enter your choice.";
-    cin>>choice;
-    switch(choice)
+    cout<<"Press 1 to continue and 0 to exit.";
+    cin>>enter;
+    if(enter==1)
     {
-        case 1: r1.residentLogin();
-                break;
-        case 2: r1.acceptUserInfo(0);
-                break;
-        case 3: a1.adminLogin();
-                break;
-        case 4: exit(0);
-                break;
+        cout<<"================================================================= MAIN MENU ==============================================================="<<endl;
+        cout<<"1. Resident Login "<<endl;
+        cout<<"2. New User SignUp "<<endl;
+        cout<<"3. Admin Login "<<endl;
+        cout<<"4. Exit "<<endl;
+        cout<<"Enter your choice.";
+        cin>>choice;
+        switch(choice)
+        {
+            case 1: r1.residentLogin();
+                    break;
+            case 2: r1.acceptUserInfo(0);
+                    break;
+            case 3: a1.adminLogin();
+                    break;
+            case 4: exit(0);
+                    break;
+        }
     }
     return 0;
 };
