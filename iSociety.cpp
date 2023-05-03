@@ -1,7 +1,5 @@
 #include<bits/stdc++.h>
 #include<stdlib.h>
-#include<iomanip>
-#include<iostream>
 #include<iostream>
 #include<iomanip>
 #include<fstream>
